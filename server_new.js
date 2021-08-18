@@ -14,6 +14,18 @@ app.use(express.static(join(__dirname, "public")));
 // Enable CORS
 app.use(cors());
 
+
+// Enable the use of request body parsing middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
+// Create timesheets API endpoint
+//app.post('/order', function(req, res){
+// res.status(201).send({message: "This is the POST /order endpoint"});
+//})
+
 const checkJwt = jwt({
   secret: jwksRsa.expressJwtSecret({
     cache: true,
@@ -27,33 +39,19 @@ const checkJwt = jwt({
   algorithms: ["RS256"]
 });
 
-// Enable the use of request body parsing middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
-
-// Create orders API endpoint
-//app.post('/orders', function(req, res){
-//  res.status(201).send({message: "This is the POST /orders endpoint"});
-//})
-
-app.post('/orders', checkJwt, jwtAuthz(['read:allorders']),function(req, res){
+app.post('/order', checkJwt, jwtAuthz(['create:orders']), function(req, res){
   var order = req.body;
-  //save order to database
   res.status(201).send(order);
+  
 });
 
-app.get("/api/external", checkJwt, jwtAuthz(['read:allorders']), function(req, res) {
-  var order = req.body;
-  var userId = req.user['https://api.exampleco.com/email'];
-  order.user_id = userId;
-  console.log(authConfig);
+app.get("/api/external", checkJwt, jwtAuthz(['create:orders']), (req, res) => {
+  //console.log(authConfig);
   res.send({
     msg: "Your access token was successfully validated!"
   });
 });
-	
+
 
 // Endpoint to serve the configuration file
 app.get("/auth_config.json", (req, res) => {

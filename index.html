@@ -2,16 +2,17 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>SPA SDK Sample</title>
+    <title>Pizza 42</title>
     <link rel="stylesheet" type="text/css" href="/css/main.css" />
   </head>
 
   <body>
-    <h2>SPA Authentication Sample</h2>
-    <p>Welcome to our page!</p>
+    <h2>Pizza 42 - Order Online</h2>
+    <p>Welcome to our pizza page!</p>
     <button id="btn-login" disabled="true" onclick="login()">Log in</button>
     <button id="btn-logout" disabled="true" onclick="logout()">Log out</button>
 	<button id="btn-call-api" disabled="true" onclick="callApi()">Call Api</button>
+	<button id="btn-place-order" disabled="true" onclick="orderPizza()">Order A Pizza</button>
 	  <div class="hidden" id="gated-content">
     <p>
       You're seeing this content because you're currently
@@ -29,6 +30,10 @@
       API Call Result:
       <pre id="api-call-result"></pre>
     </label>
+	<label>
+      Order Result:
+      <pre id="api-call-result2"></pre>
+    </label>	
   </div>
 	<script src="https://cdn.auth0.com/js/auth0-spa-js/1.13/auth0-spa-js.production.js"></script>
 	<script src="js/app.js"></script>
